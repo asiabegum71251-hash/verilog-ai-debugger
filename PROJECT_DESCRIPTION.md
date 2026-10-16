@@ -1,22 +1,23 @@
-# AI-Powered Verilog Debugger and Auto-Correction Agent
+# Project Description
 
-## Objective
-Build an AI agent that detects, debugs, and corrects Verilog HDL code.
+**Title:** AI-Powered Verilog Debugger and Auto-Correction Agent
 
-## Technologies
-- Python
-- Google Colab
-- Verilog HDL
-- Icarus Verilog
-- AI language model
+**Problem Statement:** Manual Verilog debugging can be time-consuming.
+Syntax errors and incorrect logic can make hardware designs fail.
 
-## Features
-- Detect syntax errors
-- Identify potential logic errors
-- Generate corrected Verilog code
-- Compile the corrected code
-- Verify outputs using testbenches
-- Explain detected errors
+**Proposed Solution:** Use an AI model to analyze a design description
+and testbench, suggest corrected Verilog code, and verify the code
+using compilation and simulation.
 
-## Current Status
-Project repository created. Implementation and testing are in progress.
+**Tech Stack:** Python, Google Gemini API, Icarus Verilog,
+Google Colab, and GitHub.
+
+**Key Features:**
+- AI-assisted Verilog code analysis
+- Automated correction suggestions
+- Verilog compilation
+- Testbench simulation
+- Test-result reporting
+
+**Limitations:** The tool depends on the quality of the design
+description, AI-generated code, and testbench coverage.
