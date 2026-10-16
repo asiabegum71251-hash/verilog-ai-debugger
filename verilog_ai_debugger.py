@@ -30,7 +30,7 @@ def ask_gemini(prompt):
     return data["candidates"][0]["content"]["parts"][0]["text"]
 
 
-def debug_verilog(description, testbench):
+def debug_verilog(description, testbench,testbench_module):
     prompt = f"""
 You are a Verilog debugging assistant.
 
@@ -65,7 +65,7 @@ Do not include the testbench in the code block.
 
     compile_result = subprocess.run(
         [
-            "iverilog", "-g2012", "-s", "tb_and_gate",
+            "iverilog", "-g2012", "-s", testbench_module,
             "-o", "simulation.out", "design.v", "testbench.v"
         ],
         capture_output=True,
