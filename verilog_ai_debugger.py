@@ -30,12 +30,15 @@ def ask_gemini(prompt):
     return data["candidates"][0]["content"]["parts"][0]["text"]
 
 
-def debug_verilog(description, testbench,testbench_module):
+def debug_verilog(description, faulty_design, testbench,testbench_module):
     prompt = f"""
 You are a Verilog debugging assistant.
 
 Design description:
 {description}
+
+Faulty Verilog design:
+{faulty_design}
 
 Testbench:
 {testbench}
