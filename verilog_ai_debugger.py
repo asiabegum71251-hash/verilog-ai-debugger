@@ -90,6 +90,6 @@ Do not include the testbench in the code block.
         print("Simulation failed:")
         print(simulation.stderr)
     elif "ALL 4 TESTS PASSED" in simulation.stdout:
-        print("All four AND-gate tests passed.")
+        print("Testbench reports that all tests passed.")
     else:
         print("Review the testbench output to determine the result.")
