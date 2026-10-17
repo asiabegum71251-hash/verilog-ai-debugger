@@ -11,8 +11,15 @@ st.set_page_config(
 )
 
 # Load the API key securely from Streamlit Secrets
-if "GEMINI_API_KEY" in st.secrets:
-    os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
+try:
+    api_key = st.secrets["GEMINI_API_KEY"]
+    os.environ["GEMINI_API_KEY"] = str(api_key).strip()
+except (KeyError, FileNotFoundError):
+    st.error(
+        "Gemini API key is missing. "
+        "Check Settings → Secrets."
+    )
+
 
 st.title("💻 AI-Powered Verilog Debugger")
 st.subheader("Analyze. Correct. Simulate. Verify.")
