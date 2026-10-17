@@ -55,7 +55,7 @@ Do not include the testbench in the code block.
     print(answer)
 
     match = re.search(
-        r"```(?:verilog|systemverilog)?\s*\n(.*?)```",
+        r"```(?:verilog|systemverilog)?\s*(.*?)```",
         answer,
         re.DOTALL | re.IGNORECASE,
     )
