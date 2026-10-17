@@ -5,6 +5,7 @@ from pathlib import Path
 import requests
 
 
+
 def ask_gemini(prompt):
     api_key = os.environ.get("GEMINI_API_KEY")
 
@@ -30,7 +31,7 @@ def ask_gemini(prompt):
     return data["candidates"][0]["content"]["parts"][0]["text"]
 
 
-def debug_verilog(description, faulty_design, testbench,testbench_module):
+def debug_verilog(description, faulty_design, testbench, testbench_module):
     prompt = f"""
 You are a Verilog debugging assistant.
 
@@ -49,6 +50,7 @@ Do not include the testbench in the code block.
 """
 
     answer = ask_gemini(prompt)
+
     print("AI analysis and correction:\n")
     print(answer)
 
@@ -59,10 +61,11 @@ Do not include the testbench in the code block.
     )
 
     if not match:
-        print("Could not extract Verilog code automatically.")
+        print("\nCould not extract Verilog code automatically.")
         return
 
     corrected = match.group(1).strip()
+
     Path("design.v").write_text(corrected)
     Path("testbench.v").write_text(testbench)
 
@@ -73,6 +76,7 @@ Do not include the testbench in the code block.
         ],
         capture_output=True,
         text=True,
+        timeout=30,
     )
 
     if compile_result.returncode != 0:
@@ -80,19 +84,27 @@ Do not include the testbench in the code block.
         print(compile_result.stderr)
         return
 
+    print("\nCompilation successful!")
+
     simulation = subprocess.run(
         ["vvp", "simulation.out"],
         capture_output=True,
         text=True,
+        timeout=30,
     )
 
     print("\nSimulation output:")
     print(simulation.stdout)
 
     if simulation.returncode != 0:
-        print("Simulation failed:")
+        print("\nSimulation failed:")
         print(simulation.stderr)
-    elif "ALL 4 TESTS PASSED" in simulation.stdout:
-        print("Testbench reports that all tests passed.")
+    elif re.search(
+        r"ALL\s+\d+\s+TESTS\s+PASSED",
+        simulation.stdout,
+        re.IGNORECASE,
+    ):
+        print("\nTestbench reports that all tests passed!")
     else:
-        print("Review the testbench output to determine the result.")
+        print("\nReview the testbench output to determine the result.")
+
